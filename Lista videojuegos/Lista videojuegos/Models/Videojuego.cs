@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lista_videojuegos.Models
 {
-    internal class Videojuego
+    public class Videojuego
     {
         public string Id { get; set; } = string.Empty;
         public string Nombre { get; set; } = string.Empty;
