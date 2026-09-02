@@ -73,10 +73,9 @@
 	<ItemGroup>
 	  <Folder Include="Converters\" />
 	  <Folder Include="Data\" />
-	  <Folder Include="Prueba\" />
+	  <Folder Include="Services\" />
 	  <Folder Include="Views\" />
 	  <Folder Include="ViewModels\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>
