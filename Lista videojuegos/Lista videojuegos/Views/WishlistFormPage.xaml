@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Lista_videojuegos.ViewModels"
+             x:Class="Lista_videojuegos.Views.WishlistFormPage"
+             x:DataType="vm:WishlistFormViewModel"
+             Title="Agregar a la Wishlist">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20"
+                             Spacing="12">
+
+            <Label Text="Agregar juego a tu Wishlist"
+                   FontSize="22"
+                   FontAttributes="Bold" />
+
+            <Label Text="Registra el juego que quieres comprar más adelante, como en la lista de deseos de Steam."
+                   FontSize="14"
+                   TextColor="Gray" />
+
+            <Label Text="Nombre del juego"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding Nombre}"
+                   Placeholder="Ej. Silksong" />
+
+            <Label Text="Descripción"
+                   FontAttributes="Bold" />
+            <Editor Text="{Binding Descripcion}"
+                    Placeholder="Breve descripción del juego"
+                    HeightRequest="80"
+                    AutoSize="TextChanges" />
+
+            <Label Text="Precio"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding Precio}"
+                   Placeholder="Ej. 19.99"
+                   Keyboard="Numeric" />
+
+            <Label Text="Categoría"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding Categoria}"
+                   Placeholder="Ej. RPG, Plataformas, Aventura" />
+
+            <Label Text="URL de la imagen"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding ImagenUrl}"
+                   Placeholder="https://..."
+                   Keyboard="Url" />
+
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   IsVisible="{Binding HasError}" />
+
+            <Button Text="Agregar a la Wishlist"
+                    Command="{Binding AgregarALaWishlistCommand}"
+                    Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

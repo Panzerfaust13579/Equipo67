@@ -37,5 +37,11 @@ namespace Lista_videojuegos.ViewModels
         {
             await Shell.Current.GoToAsync("favoritos");
         }
+
+        [RelayCommand]
+        public async Task NavigateToWishlistFormAsync()
+        {
+            await Shell.Current.GoToAsync("wishlist-form");
+        }
     }
 }

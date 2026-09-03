@@ -8,7 +8,7 @@
              x:Class="Lista_videojuegos.Views.ListaPage"
              x:Name="PageRoot">
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto,Auto">
 
         <CollectionView ItemsSource="{Binding Videojuegos}"
                         SelectionMode="None"
@@ -59,10 +59,15 @@
 
         </CollectionView>
 
-        <Button Text="Ver favoritos"
-                Command="{Binding NavigateToFavoritosCommand}"
-                Margin="10"
+        <Button Text="Agregar juego a la Wishlist"
+                Command="{Binding NavigateToWishlistFormCommand}"
+                Margin="10,0,10,10"
                 Grid.Row="1" />
+
+        <Button Text="Ver Wishlist"
+                Command="{Binding NavigateToFavoritosCommand}"
+                Margin="10,0,10,10"
+                Grid.Row="2" />
 
     </Grid>
 
