@@ -1,6 +1,7 @@
 ﻿using Lista_videojuegos.Models;
 using Lista_videojuegos.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Lista_videojuegos.ViewModels
 {
@@ -8,6 +9,7 @@ namespace Lista_videojuegos.ViewModels
     public partial class DetalleViewModel : ObservableObject
     {
         private readonly VideoJuegoRepository _videoJuegoRepository;
+        private readonly FavoritosViewModel _favoritosViewModel;
 
         [ObservableProperty]
         private string id;
@@ -15,9 +17,12 @@ namespace Lista_videojuegos.ViewModels
         [ObservableProperty]
         private Videojuego videoJuego;
 
-        public DetalleViewModel(VideoJuegoRepository videoJuegoRepository)
+        public DetalleViewModel(
+            VideoJuegoRepository videoJuegoRepository,
+            FavoritosViewModel favoritosViewModel)
         {
             _videoJuegoRepository = videoJuegoRepository;
+            _favoritosViewModel = favoritosViewModel;
         }
 
         partial void OnIdChanged(string value)
@@ -26,6 +31,15 @@ namespace Lista_videojuegos.ViewModels
             {
                 VideoJuego = _videoJuegoRepository.GetVideojuegoById(value);
             }
+        }
+
+        [RelayCommand]
+        public void AgregarFavorito()
+        {
+            if (VideoJuego == null)
+                return;
+
+            _favoritosViewModel.AgregarFavorito(VideoJuego);
         }
     }
 }

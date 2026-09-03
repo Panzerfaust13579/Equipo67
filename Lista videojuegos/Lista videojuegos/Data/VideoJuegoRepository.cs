@@ -2,12 +2,13 @@
 using Lista_videojuegos.Models;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Lista_videojuegos.Data
 {
     public class VideoJuegoRepository
     {
-        private readonly List<Videojuego> _videojuegos = 
+        private readonly List<Videojuego> _videojuegos =
             [
                 new(){ Id = "1", Nombre = "Silksong", Descripcion = "Mejor juego del año y GOTY", Categoria ="Metroidvania", Precio = 227.99m, ImagenUrl = "https://example.com/silksong.jpg" },
                 new(){ Id = "2", Nombre = "Hollow Knight", Descripcion = "Juego de plataformas y acción en 2D", Categoria ="Metroidvania", Precio = 19.99m, ImagenUrl = "https://example.com/hollowknight.jpg" },

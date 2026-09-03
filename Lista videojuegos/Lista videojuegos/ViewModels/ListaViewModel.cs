@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lista_videojuegos.Models;
@@ -15,7 +16,6 @@ namespace Lista_videojuegos.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Videojuego> videojuegos;
-
 
         public ListaViewModel(VideoJuegoRepository videoJuegoRepository)
         {
@@ -32,7 +32,10 @@ namespace Lista_videojuegos.ViewModels
             await Shell.Current.GoToAsync($"/{nameof(DetallePage)}?Id={videojuego.Id}");
         }
 
-       
-
+        [RelayCommand]
+        public async Task NavigateToFavoritosAsync()
+        {
+            await Shell.Current.GoToAsync("favoritos");
+        }
     }
 }

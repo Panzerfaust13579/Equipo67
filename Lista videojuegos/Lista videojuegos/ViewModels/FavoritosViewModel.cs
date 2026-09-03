@@ -29,7 +29,12 @@ namespace Lista_videojuegos.ViewModels
             if (videojuego == null)
                 return;
 
-            Productos.Remove(videojuego);
+            var favorito = Productos.FirstOrDefault(p => p.Id == videojuego.Id);
+
+            if (favorito != null)
+            {
+                Productos.Remove(favorito);
+            }
         }
     }
 }

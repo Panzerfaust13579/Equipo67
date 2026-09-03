@@ -1,37 +1,41 @@
-﻿using Lista_videojuegos.ViewModels;
-using Lista_videojuegos.Views;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Lista_videojuegos.Data;
+using Lista_videojuegos.ViewModels;
+using Lista_videojuegos.Views;
 
-namespace Lista_videojuegos
+namespace Lista_videojuegos;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
 
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
-            // Register the pages and view models for dependency injection
-            builder.Services.AddSingleton<ListaPage>();
-            builder.Services.AddSingleton<ListaViewModel>();
-            // Repository
-            builder.Services.AddSingleton<VideoJuegoRepository>();
-            builder.Services.AddSingleton<DetallePage>();
-            builder.Services.AddSingleton<DetalleViewModel>();
+        // Repository
+        builder.Services.AddSingleton<VideoJuegoRepository>();
+
+        // ViewModels
+        builder.Services.AddSingleton<FavoritosViewModel>();
+        builder.Services.AddTransient<ListaViewModel>();
+        builder.Services.AddTransient<DetalleViewModel>();
+
+        // Pages
+        builder.Services.AddTransient<ListaPage>();
+        builder.Services.AddTransient<DetallePage>();
+        builder.Services.AddTransient<FavoritosPage>();
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
 }

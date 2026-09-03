@@ -1,11 +1,15 @@
-﻿namespace Lista_videojuegos
+﻿using Lista_videojuegos.Views;
+
+namespace Lista_videojuegos
 {
     public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(Views.DetallePage), typeof(Views.DetallePage));
+
+            Routing.RegisterRoute(nameof(DetallePage), typeof(DetallePage));
+            Routing.RegisterRoute("favoritos", typeof(FavoritosPage));
         }
     }
 }
