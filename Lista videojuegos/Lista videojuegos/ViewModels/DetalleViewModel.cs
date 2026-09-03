@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Lista_videojuegos.Models;
+﻿using Lista_videojuegos.Models;
 using Lista_videojuegos.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 

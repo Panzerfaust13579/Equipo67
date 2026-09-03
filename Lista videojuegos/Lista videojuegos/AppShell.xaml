@@ -8,7 +8,7 @@
     Title="Lista_videojuegos">
 
     <ShellContent
-        Title="Home"
+        Title="ListaVideojuegos"
         ContentTemplate="{DataTemplate Views:ListaPage}"
         Route="ListaPage" />
 
