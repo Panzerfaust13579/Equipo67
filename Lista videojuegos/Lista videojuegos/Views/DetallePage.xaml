@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lista_videojuegos.Views.DetallePage"
              Title="DetallePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Image Source="{Binding VideoJuego.ImagenUrl}" HeightRequest="220" Aspect="AspectFill" />
+            <Label Text="{Binding VideoJuego.Nombre}" FontSize="24" FontAttributes="Bold" />
+            <Label Text="{Binding VideoJuego.Categoria}" FontSize="14" TextColor="Gray" />
+            <Label Text="{Binding VideoJuego.Descripcion}" FontSize="16" />
+            <Label Text="{Binding VideoJuego.Precio, StringFormat='Precio: {0:C}'}" FontSize="18" FontAttributes="Bold" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
