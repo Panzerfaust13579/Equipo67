@@ -26,13 +26,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<FavoritosViewModel>();
         builder.Services.AddTransient<ListaViewModel>();
         builder.Services.AddTransient<DetalleViewModel>();
-        builder.Services.AddTransient<WishlistFormViewModel>();
+        builder.Services.AddTransient<VideojuegoFormViewModel>();
 
         // Pages
         builder.Services.AddTransient<ListaPage>();
         builder.Services.AddTransient<DetallePage>();
         builder.Services.AddTransient<FavoritosPage>();
-        builder.Services.AddTransient<WishlistFormPage>();
+        builder.Services.AddTransient<VideojuegoFormPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

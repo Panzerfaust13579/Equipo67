@@ -2,9 +2,9 @@ using Lista_videojuegos.ViewModels;
 
 namespace Lista_videojuegos.Views;
 
-public partial class WishlistFormPage : ContentPage
+public partial class VideojuegoFormPage : ContentPage
 {
-    public WishlistFormPage(WishlistFormViewModel viewModel)
+    public VideojuegoFormPage(VideojuegoFormViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

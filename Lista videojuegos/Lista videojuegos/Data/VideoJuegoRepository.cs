@@ -25,5 +25,20 @@ namespace Lista_videojuegos.Data
         public List<Videojuego> GetAllVideojuegos() => _videojuegos;
 
         public Videojuego GetVideojuegoById(string id) => _videojuegos.FirstOrDefault(v => v.Id == id);
+
+        public void AddVideojuego(Videojuego videojuego)
+        {
+            _videojuegos.Add(videojuego);
+        }
+
+        public void UpdateVideojuego(Videojuego videojuego)
+        {
+            var index = _videojuegos.FindIndex(v => v.Id == videojuego.Id);
+
+            if (index >= 0)
+            {
+                _videojuegos[index] = videojuego;
+            }
+        }
     }
 }

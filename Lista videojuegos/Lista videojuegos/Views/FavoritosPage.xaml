@@ -6,11 +6,11 @@
              xmlns:vm="clr-namespace:Lista_videojuegos.ViewModels"
              x:Class="Lista_videojuegos.Views.FavoritosPage"
              x:DataType="vm:FavoritosViewModel"
-             Title="Wishlist">
+             Title="Favoritos">
 
     <VerticalStackLayout Padding="10">
 
-        <Label Text="Mi Wishlist"
+        <Label Text="Mis Favoritos"
                FontSize="24"
                FontAttributes="Bold"
                Margin="10" />
@@ -24,11 +24,11 @@
                                      VerticalOptions="Center"
                                      HorizontalOptions="Center">
 
-                    <Label Text="Tu Wishlist está vacía."
+                    <Label Text="No tienes productos favoritos."
                            FontSize="18"
                            HorizontalTextAlignment="Center" />
 
-                    <Label Text="Agrega juegos desde la pantalla de Detalle o con el formulario."
+                    <Label Text="Agrega productos desde la pantalla de Detalle."
                            FontSize="14"
                            TextColor="Gray"
                            HorizontalTextAlignment="Center" />

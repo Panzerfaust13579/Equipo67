@@ -39,9 +39,14 @@ namespace Lista_videojuegos.ViewModels
         }
 
         [RelayCommand]
-        public async Task NavigateToWishlistFormAsync()
+        public async Task NavigateToAgregarJuegoAsync()
         {
-            await Shell.Current.GoToAsync("wishlist-form");
+            await Shell.Current.GoToAsync("videojuego-form");
+        }
+
+        public void RefrescarVideojuegos()
+        {
+            Videojuegos = new ObservableCollection<Videojuego>(_videoJuegoRepository.GetAllVideojuegos());
         }
     }
 }

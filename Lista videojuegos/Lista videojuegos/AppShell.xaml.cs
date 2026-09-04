@@ -10,7 +10,7 @@ namespace Lista_videojuegos
 
             Routing.RegisterRoute(nameof(DetallePage), typeof(DetallePage));
             Routing.RegisterRoute("favoritos", typeof(FavoritosPage));
-            Routing.RegisterRoute("wishlist-form", typeof(WishlistFormPage));
+            Routing.RegisterRoute("videojuego-form", typeof(VideojuegoFormPage));
         }
     }
 }

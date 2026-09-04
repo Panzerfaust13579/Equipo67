@@ -3,22 +3,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Lista_videojuegos.ViewModels"
-             x:Class="Lista_videojuegos.Views.WishlistFormPage"
-             x:DataType="vm:WishlistFormViewModel"
-             Title="Agregar a la Wishlist">
+             x:Class="Lista_videojuegos.Views.VideojuegoFormPage"
+             x:DataType="vm:VideojuegoFormViewModel"
+             Title="{Binding Titulo}">
 
     <ScrollView>
 
         <VerticalStackLayout Padding="20"
                              Spacing="12">
 
-            <Label Text="Agregar juego a tu Wishlist"
+            <Label Text="{Binding Titulo}"
                    FontSize="22"
                    FontAttributes="Bold" />
-
-            <Label Text="Registra el juego que quieres comprar más adelante, como en la lista de deseos de Steam."
-                   FontSize="14"
-                   TextColor="Gray" />
 
             <Label Text="Nombre del juego"
                    FontAttributes="Bold" />
@@ -53,8 +49,8 @@
                    TextColor="Red"
                    IsVisible="{Binding HasError}" />
 
-            <Button Text="Agregar a la Wishlist"
-                    Command="{Binding AgregarALaWishlistCommand}"
+            <Button Text="Guardar"
+                    Command="{Binding GuardarCommand}"
                     Margin="0,10,0,0" />
 
         </VerticalStackLayout>

@@ -59,12 +59,12 @@
 
         </CollectionView>
 
-        <Button Text="Agregar juego a la Wishlist"
-                Command="{Binding NavigateToWishlistFormCommand}"
+        <Button Text="Agregar nuevo juego"
+                Command="{Binding NavigateToAgregarJuegoCommand}"
                 Margin="10,0,10,10"
                 Grid.Row="1" />
 
-        <Button Text="Ver Wishlist"
+        <Button Text="Ver favoritos"
                 Command="{Binding NavigateToFavoritosCommand}"
                 Margin="10,0,10,10"
                 Grid.Row="2" />

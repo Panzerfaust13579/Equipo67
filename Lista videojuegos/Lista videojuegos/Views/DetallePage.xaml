@@ -32,6 +32,9 @@
             <Button Text="Agregar a favoritos"
                     Command="{Binding AgregarFavoritoCommand}" />
 
+            <Button Text="Editar juego"
+                    Command="{Binding EditarCommand}" />
+
         </VerticalStackLayout>
 
     </ScrollView>

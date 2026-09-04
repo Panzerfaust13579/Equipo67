@@ -1,4 +1,5 @@
-﻿using Lista_videojuegos.Models;
+﻿using System.Threading.Tasks;
+using Lista_videojuegos.Models;
 using Lista_videojuegos.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -40,6 +41,15 @@ namespace Lista_videojuegos.ViewModels
                 return;
 
             _favoritosViewModel.AgregarFavorito(VideoJuego);
+        }
+
+        [RelayCommand]
+        public async Task EditarAsync()
+        {
+            if (VideoJuego == null)
+                return;
+
+            await Shell.Current.GoToAsync($"videojuego-form?Id={VideoJuego.Id}");
         }
     }
 }
