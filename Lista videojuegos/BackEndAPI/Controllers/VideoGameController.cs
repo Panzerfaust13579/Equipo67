@@ -65,7 +65,7 @@ namespace BackEndAPI.Controllers
 
         // POST: api/VideoGame (Crea un nuevo videojuego)
         [HttpPost("CreateVideoJuego")]
-        public async Task<IActionResult> CreateVideoGame([FromBody] VideoGameDTO videoGameDto)
+        public async Task<IActionResult> CreateVideoGame([FromBody] CreateVgDTO videoGameDto)
         {
             if (!ModelState.IsValid)
             {
@@ -73,8 +73,7 @@ namespace BackEndAPI.Controllers
             }
 
             var videoGame = new VideoGame
-            {
-                Id = string.IsNullOrWhiteSpace(videoGameDto.Id) ? Guid.NewGuid().ToString() : videoGameDto.Id,
+            { 
                 Nombre = videoGameDto.Nombre,
                 Descripcion = videoGameDto.Descripcion,
                 Precio = videoGameDto.Precio,
@@ -90,7 +89,7 @@ namespace BackEndAPI.Controllers
 
         // PUT: api/VideoGame/{id} (Actualiza un videojuego por su ID)
         [HttpPut("EditVideoJuego/{id}")]
-        public async Task<IActionResult> UpdateVideoGame(string id, [FromBody] VideoGameDTO videoGameDto)
+        public async Task<IActionResult> UpdateVideoGame(string id, [FromBody] UpdateVgDTO videoGameDto)
         {
             if (!ModelState.IsValid)
             {
