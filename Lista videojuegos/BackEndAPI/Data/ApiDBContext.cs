@@ -9,6 +9,6 @@ namespace BackEndAPI.Data
         {
         }
 
-        public DbSet<VideoGame> VideoGames { get; set; } = null!;
+        public DbSet<Videojuego> VideoGames { get; set; } = null!;
     }
 }

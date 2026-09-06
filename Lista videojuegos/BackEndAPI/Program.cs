@@ -50,9 +50,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Evitar 404 en la raíz: redirige a /videogame, que es un endpoint útil para la API
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapGet("/", () => Results.Redirect("/api/VideoGame"));
 
 // Endpoint de estado
-app.MapGet("/health", () => Results.Ok(new { status = "OK" }));
+app.MapGet("/api/health", () => Results.Ok(new { status = "OK" }));
 
 app.Run();

@@ -1,6 +1,6 @@
 ﻿namespace BackEndAPI.Models
 {
-    public class VideoGame
+    public class Videojuego
     {
 
         public string Id { get; set; } = string.Empty;

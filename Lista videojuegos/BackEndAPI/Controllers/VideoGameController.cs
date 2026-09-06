@@ -72,7 +72,7 @@ namespace BackEndAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var videoGame = new VideoGame
+            var videoGame = new Videojuego
             { 
                 Nombre = videoGameDto.Nombre,
                 Descripcion = videoGameDto.Descripcion,

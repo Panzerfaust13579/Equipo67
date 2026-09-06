@@ -10,7 +10,7 @@ namespace BackEndAPI.Data
 
             var lista = new[]
             {
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "The Legend of Zelda: Breath of the Wild",
@@ -19,7 +19,7 @@ namespace BackEndAPI.Data
                     Categoria = "Action-Adventure",
                     ImagenUrl = "https://example.com/zelda.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Super Mario Odyssey",
@@ -28,7 +28,7 @@ namespace BackEndAPI.Data
                     Categoria = "Platformer",
                     ImagenUrl = "https://example.com/mario.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "God of War",
@@ -37,7 +37,7 @@ namespace BackEndAPI.Data
                     Categoria = "Action",
                     ImagenUrl = "https://example.com/godofwar.jpg"
                 },
-                new VideoGame 
+                new Videojuego 
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Minecraft",
@@ -46,7 +46,7 @@ namespace BackEndAPI.Data
                     Categoria = "Sandbox",
                     ImagenUrl = "https://example.com/minecraft.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Fortnite",
@@ -55,7 +55,7 @@ namespace BackEndAPI.Data
                     Categoria = "Battle Royale",
                     ImagenUrl = "https://example.com/fortnite.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "The Witcher 3: Wild Hunt",
@@ -64,7 +64,7 @@ namespace BackEndAPI.Data
                     Categoria = "RPG",
                     ImagenUrl = "https://example.com/witcher3.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Red Dead Redemption 2",
@@ -73,7 +73,7 @@ namespace BackEndAPI.Data
                     Categoria = "Action-Adventure",
                     ImagenUrl = "https://example.com/rdr2.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Overwatch",
@@ -82,7 +82,7 @@ namespace BackEndAPI.Data
                     Categoria = "First-Person Shooter",
                     ImagenUrl = "https://example.com/overwatch.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Silksong",
@@ -91,7 +91,7 @@ namespace BackEndAPI.Data
                     Categoria = "Action-Adventure",
                     ImagenUrl = "https://example.com/silksong.jpg"
                 },
-                new VideoGame
+                new Videojuego
                 {
                     Id = Guid.NewGuid().ToString(),
                     Nombre = "Hollow Knight",
