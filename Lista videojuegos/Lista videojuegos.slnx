@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Lista videojuegos/Lista videojuegos.csproj" />
+  <Project Path="BackEndAPI/BackEndAPI.csproj" Id="ebb5aa30-f2f5-481d-b2aa-8c07abb5a191" />
+  <Project Path="Lista videojuegos/Lista videojuegos.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
 </Solution>
