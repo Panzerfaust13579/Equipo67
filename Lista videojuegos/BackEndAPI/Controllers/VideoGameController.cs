@@ -74,6 +74,7 @@ namespace BackEndAPI.Controllers
 
             var videoGame = new Videojuego
             { 
+                Id = Guid.NewGuid().ToString(),
                 Nombre = videoGameDto.Nombre,
                 Descripcion = videoGameDto.Descripcion,
                 Precio = videoGameDto.Precio,
