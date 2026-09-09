@@ -12,53 +12,120 @@ namespace Lista_videojuegos.ViewModels
     {
         private readonly VideoJuegoRepository _videoJuegoRepository;
 
-        [ObservableProperty]
-        private string id = string.Empty;
+        private string _id = string.Empty;
+        private bool _esEdicion;
+        private string _titulo = "Agregar juego";
+        private string _nombre = string.Empty;
+        private string _descripcion = string.Empty;
+        private string _precio = string.Empty;
+        private string _categoria = string.Empty;
+        private string _imagenUrl = string.Empty;
+        private string _errorMessage = string.Empty;
+        private bool _hasError;
 
-        [ObservableProperty]
-        private bool esEdicion;
-
-        [ObservableProperty]
-        private string titulo = "Agregar juego";
-
-        [ObservableProperty]
-        private string nombre = string.Empty;
-
-        [ObservableProperty]
-        private string descripcion = string.Empty;
-
-        [ObservableProperty]
-        private string precio = string.Empty;
-
-        [ObservableProperty]
-        private string categoria = string.Empty;
-
-        [ObservableProperty]
-        private string imagenUrl = string.Empty;
-
-        [ObservableProperty]
-        private string errorMessage = string.Empty;
-
-        [ObservableProperty]
-        private bool hasError;
-
-        public VideojuegoFormViewModel(VideoJuegoRepository videoJuegoRepository)
+        public string Id
         {
-            _videoJuegoRepository = videoJuegoRepository;
+            get => _id;
+            set
+            {
+                if (SetProperty(ref _id, value))
+                {
+                    CargarDatos(value);
+                }
+            }
         }
 
-        partial void OnIdChanged(string value)
+        public bool EsEdicion
+        {
+            get => _esEdicion;
+            set => SetProperty(ref _esEdicion, value);
+        }
+
+        public string Titulo
+        {
+            get => _titulo;
+            set => SetProperty(ref _titulo, value);
+        }
+
+        public string Nombre
+        {
+            get => _nombre;
+            set => SetProperty(ref _nombre, value);
+        }
+
+        public string Descripcion
+        {
+            get => _descripcion;
+            set => SetProperty(ref _descripcion, value);
+        }
+
+        public string Precio
+        {
+            get => _precio;
+            set => SetProperty(ref _precio, value);
+        }
+
+        public string Categoria
+        {
+            get => _categoria;
+            set => SetProperty(ref _categoria, value);
+        }
+
+        public string ImagenUrl
+        {
+            get => _imagenUrl;
+            set => SetProperty(ref _imagenUrl, value);
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                if (SetProperty(ref _errorMessage, value))
+                {
+                    HasError = !string.IsNullOrEmpty(value);
+                }
+            }
+        }
+
+        public bool HasError
+        {
+            get => _hasError;
+            set => SetProperty(ref _hasError, value);
+        }
+
+        public IAsyncRelayCommand GuardarCommand { get; }
+
+        public VideojuegoFormViewModel(
+            VideoJuegoRepository videoJuegoRepository)
+        {
+            _videoJuegoRepository = videoJuegoRepository;
+
+            GuardarCommand =
+                new AsyncRelayCommand(GuardarAsync);
+        }
+
+        private void CargarDatos(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
                 EsEdicion = false;
                 Titulo = "Agregar juego";
+
+                Nombre = string.Empty;
+                Descripcion = string.Empty;
+                Precio = string.Empty;
+                Categoria = string.Empty;
+                ImagenUrl = string.Empty;
+
                 return;
             }
 
-            var videojuego = _videoJuegoRepository.GetVideojuegoById(value);
+            var videojuego =
+                _videoJuegoRepository.ObtenerPorId(value);
 
-            if (videojuego is null)
+            if (videojuego == null)
             {
                 EsEdicion = false;
                 Titulo = "Agregar juego";
@@ -67,6 +134,7 @@ namespace Lista_videojuegos.ViewModels
 
             EsEdicion = true;
             Titulo = "Editar juego";
+
             Nombre = videojuego.Nombre;
             Descripcion = videojuego.Descripcion;
             Precio = videojuego.Precio.ToString();
@@ -74,23 +142,24 @@ namespace Lista_videojuegos.ViewModels
             ImagenUrl = videojuego.ImagenUrl;
         }
 
-        partial void OnErrorMessageChanged(string value)
-        {
-            HasError = !string.IsNullOrEmpty(value);
-        }
-
-        [RelayCommand]
-        public async Task GuardarAsync()
+        private async Task GuardarAsync()
         {
             if (string.IsNullOrWhiteSpace(Nombre))
             {
-                ErrorMessage = "El nombre del juego es obligatorio.";
+                ErrorMessage =
+                    "El nombre del juego es obligatorio.";
+
                 return;
             }
 
-            if (!decimal.TryParse(Precio, out var precioDecimal) || precioDecimal < 0)
+            if (!decimal.TryParse(
+                    Precio,
+                    out var precioDecimal) ||
+                precioDecimal < 0)
             {
-                ErrorMessage = "Ingresa un precio válido.";
+                ErrorMessage =
+                    "Ingresa un precio válido.";
+
                 return;
             }
 
@@ -98,21 +167,35 @@ namespace Lista_videojuegos.ViewModels
 
             var videojuego = new Videojuego
             {
-                Id = EsEdicion ? Id : Guid.NewGuid().ToString(),
+                Id = EsEdicion
+                    ? Id
+                    : Guid.NewGuid().ToString(),
+
                 Nombre = Nombre.Trim(),
-                Descripcion = Descripcion.Trim(),
+
+                Descripcion =
+                    Descripcion.Trim(),
+
                 Precio = precioDecimal,
-                Categoria = string.IsNullOrWhiteSpace(Categoria) ? "Sin categoría" : Categoria.Trim(),
-                ImagenUrl = ImagenUrl.Trim()
+
+                Categoria =
+                    string.IsNullOrWhiteSpace(Categoria)
+                        ? "Sin categoría"
+                        : Categoria.Trim(),
+
+                ImagenUrl =
+                    ImagenUrl.Trim()
             };
 
             if (EsEdicion)
             {
-                _videoJuegoRepository.UpdateVideojuego(videojuego);
+                _videoJuegoRepository.Actualizar(
+                    videojuego);
             }
             else
             {
-                _videoJuegoRepository.AddVideojuego(videojuego);
+                _videoJuegoRepository.Agregar(
+                    videojuego);
             }
 
             await Shell.Current.GoToAsync("..");

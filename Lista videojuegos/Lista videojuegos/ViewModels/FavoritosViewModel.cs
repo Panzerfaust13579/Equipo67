@@ -1,17 +1,34 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lista_videojuegos.Models;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Lista_videojuegos.ViewModels
 {
     public partial class FavoritosViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private ObservableCollection<Videojuego> productos = new();
+        private ObservableCollection<Videojuego> _productos = new();
 
-        [RelayCommand]
+        public ObservableCollection<Videojuego> Productos
+        {
+            get => _productos;
+            set => SetProperty(ref _productos, value);
+        }
+
+        public IRelayCommand<Videojuego> AgregarFavoritoCommand { get; }
+
+        public IRelayCommand<Videojuego> EliminarFavoritoCommand { get; }
+
+        public FavoritosViewModel()
+        {
+            AgregarFavoritoCommand =
+                new RelayCommand<Videojuego>(AgregarFavorito);
+
+            EliminarFavoritoCommand =
+                new RelayCommand<Videojuego>(EliminarFavorito);
+        }
+
         public void AgregarFavorito(Videojuego videojuego)
         {
             if (videojuego == null)
@@ -23,13 +40,14 @@ namespace Lista_videojuegos.ViewModels
             }
         }
 
-        [RelayCommand]
         public void EliminarFavorito(Videojuego videojuego)
         {
             if (videojuego == null)
                 return;
 
-            var favorito = Productos.FirstOrDefault(p => p.Id == videojuego.Id);
+            var favorito =
+                Productos.FirstOrDefault(
+                    p => p.Id == videojuego.Id);
 
             if (favorito != null)
             {

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Lista_videojuegos.Models;
-using Lista_videojuegos.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Lista_videojuegos.Data;
+using Lista_videojuegos.Models;
 
 namespace Lista_videojuegos.ViewModels
 {
@@ -12,11 +12,30 @@ namespace Lista_videojuegos.ViewModels
         private readonly VideoJuegoRepository _videoJuegoRepository;
         private readonly FavoritosViewModel _favoritosViewModel;
 
-        [ObservableProperty]
-        private string id;
+        private string _id = string.Empty;
+        private Videojuego? _videoJuego;
 
-        [ObservableProperty]
-        private Videojuego videoJuego;
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                if (SetProperty(ref _id, value))
+                {
+                    CargarVideojuego(value);
+                }
+            }
+        }
+
+        public Videojuego? VideoJuego
+        {
+            get => _videoJuego;
+            set => SetProperty(ref _videoJuego, value);
+        }
+
+        public IRelayCommand AgregarFavoritoCommand { get; }
+
+        public IAsyncRelayCommand EditarCommand { get; }
 
         public DetalleViewModel(
             VideoJuegoRepository videoJuegoRepository,
@@ -24,18 +43,24 @@ namespace Lista_videojuegos.ViewModels
         {
             _videoJuegoRepository = videoJuegoRepository;
             _favoritosViewModel = favoritosViewModel;
+
+            AgregarFavoritoCommand =
+                new RelayCommand(AgregarFavorito);
+
+            EditarCommand =
+                new AsyncRelayCommand(EditarAsync);
         }
 
-        partial void OnIdChanged(string value)
+        private void CargarVideojuego(string id)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                VideoJuego = _videoJuegoRepository.GetVideojuegoById(value);
-            }
+            if (string.IsNullOrEmpty(id))
+                return;
+
+            VideoJuego =
+                _videoJuegoRepository.ObtenerPorId(id);
         }
 
-        [RelayCommand]
-        public void AgregarFavorito()
+        private void AgregarFavorito()
         {
             if (VideoJuego == null)
                 return;
@@ -43,13 +68,13 @@ namespace Lista_videojuegos.ViewModels
             _favoritosViewModel.AgregarFavorito(VideoJuego);
         }
 
-        [RelayCommand]
-        public async Task EditarAsync()
+        private async Task EditarAsync()
         {
             if (VideoJuego == null)
                 return;
 
-            await Shell.Current.GoToAsync($"videojuego-form?Id={VideoJuego.Id}");
+            await Shell.Current.GoToAsync(
+                $"videojuego-form?Id={VideoJuego.Id}");
         }
     }
 }
