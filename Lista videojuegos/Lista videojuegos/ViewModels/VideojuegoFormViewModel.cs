@@ -1,12 +1,11 @@
-using Android.Telephony;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lista_videojuegos.Data;
 using Lista_videojuegos.Models;
 using System;
 using System.Threading.Tasks;
-using static Android.Icu.Text.CaseMap;
-using static Android.Util.EventLogTags;
+
 
 namespace Lista_videojuegos.ViewModels
 {
