@@ -12,30 +12,11 @@ namespace Lista_videojuegos.ViewModels
         private readonly VideoJuegoRepository _videoJuegoRepository;
         private readonly FavoritosViewModel _favoritosViewModel;
 
-        private string _id = string.Empty;
-        private Videojuego? _videoJuego;
+        [ObservableProperty]
+        private string id = string.Empty;
 
-        public string Id
-        {
-            get => _id;
-            set
-            {
-                if (SetProperty(ref _id, value))
-                {
-                    CargarVideojuego(value);
-                }
-            }
-        }
-
-        public Videojuego? VideoJuego
-        {
-            get => _videoJuego;
-            set => SetProperty(ref _videoJuego, value);
-        }
-
-        public IRelayCommand AgregarFavoritoCommand { get; }
-
-        public IAsyncRelayCommand EditarCommand { get; }
+        [ObservableProperty]
+        private Videojuego? videoJuego;
 
         public DetalleViewModel(
             VideoJuegoRepository videoJuegoRepository,
@@ -43,12 +24,11 @@ namespace Lista_videojuegos.ViewModels
         {
             _videoJuegoRepository = videoJuegoRepository;
             _favoritosViewModel = favoritosViewModel;
+        }
 
-            AgregarFavoritoCommand =
-                new RelayCommand(AgregarFavorito);
-
-            EditarCommand =
-                new AsyncRelayCommand(EditarAsync);
+        partial void OnIdChanged(string value)
+        {
+            CargarVideojuego(value);
         }
 
         private void CargarVideojuego(string id)
@@ -60,6 +40,7 @@ namespace Lista_videojuegos.ViewModels
                 _videoJuegoRepository.ObtenerPorId(id);
         }
 
+        [RelayCommand]
         private void AgregarFavorito()
         {
             if (VideoJuego == null)
@@ -68,13 +49,35 @@ namespace Lista_videojuegos.ViewModels
             _favoritosViewModel.AgregarFavorito(VideoJuego);
         }
 
-        private async Task EditarAsync()
+        [RelayCommand]
+        private async Task Editar()
         {
             if (VideoJuego == null)
                 return;
 
             await Shell.Current.GoToAsync(
                 $"videojuego-form?Id={VideoJuego.Id}");
+        }
+
+        [RelayCommand]
+        private async Task Eliminar()
+        {
+            if (VideoJuego == null)
+                return;
+
+            bool confirmar =
+                await Shell.Current.DisplayAlertAsync(
+                    "Eliminar videojuego",
+                    $"¿Estás seguro de que deseas eliminar \"{VideoJuego.Nombre}\"?",
+                    "Sí",
+                    "No");
+
+            if (!confirmar)
+                return;
+
+            _videoJuegoRepository.Eliminar(VideoJuego.Id);
+
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

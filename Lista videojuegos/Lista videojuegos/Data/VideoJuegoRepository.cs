@@ -23,58 +23,42 @@ namespace Lista_videojuegos.Data
             };
         }
 
-        
-
+        // Carga inicial desde el API
         public async Task CargarVideojuegosAsync()
         {
-            try
+            var response = await _httpClient.GetAsync(
+                "api/VideoGame/GetVideoJuegos");
+
+            response.EnsureSuccessStatusCode();
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            var videojuegos =
+                JsonSerializer.Deserialize<List<Videojuego>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+            if (videojuegos == null)
+                return;
+
+            _videojuegos.Clear();
+
+            foreach (var videojuego in videojuegos)
             {
-                var response = await _httpClient.GetAsync(
-                    "api/VideoGame/GetVideoJuegos");
-
-                response.EnsureSuccessStatusCode();
-
-                var json = await response.Content.ReadAsStringAsync();
-
-                var videojuegos =
-                    JsonSerializer.Deserialize<List<Videojuego>>(
-                        json,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-
-                if (videojuegos == null)
-                    return;
-
-                _videojuegos.Clear();
-
-                foreach (var videojuego in videojuegos)
-                {
-                    _videojuegos.Add(videojuego);
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                throw;
-            }
-            catch (HttpRequestException)
-            {
-                throw;
-            }
-            catch (JsonException)
-            {
-                throw;
+                _videojuegos.Add(videojuego);
             }
         }
 
-        
-
+        // READ
         public ObservableCollection<Videojuego> ObtenerTodos()
         {
             return _videojuegos;
         }
 
+        // READ BY ID
         public Videojuego? ObtenerPorId(string id)
         {
             foreach (var videojuego in _videojuegos)
@@ -86,6 +70,7 @@ namespace Lista_videojuegos.Data
             return null;
         }
 
+        // CREATE
         public void Agregar(Videojuego videojuego)
         {
             if (videojuego == null)
@@ -94,6 +79,7 @@ namespace Lista_videojuegos.Data
             _videojuegos.Add(videojuego);
         }
 
+        // UPDATE
         public void Actualizar(Videojuego videojuego)
         {
             if (videojuego == null)
@@ -112,6 +98,7 @@ namespace Lista_videojuegos.Data
             }
         }
 
+        // DELETE
         public void Eliminar(string id)
         {
             var videojuego = ObtenerPorId(id);

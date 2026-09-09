@@ -15,24 +15,61 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont(
+                    "OpenSans-Regular.ttf",
+                    "OpenSansRegular");
+
+                fonts.AddFont(
+                    "OpenSans-Semibold.ttf",
+                    "OpenSansSemibold");
             });
 
-        // Repository
-        builder.Services.AddSingleton<VideoJuegoRepository>();
+        // ==========================================
+        // REPOSITORY
+        // ==========================================
 
-        // ViewModels
-        builder.Services.AddSingleton<FavoritosViewModel>();
-        builder.Services.AddTransient<ListaViewModel>();
-        builder.Services.AddTransient<DetalleViewModel>();
-        builder.Services.AddTransient<VideojuegoFormViewModel>();
+        // Singleton:
+        // conserva la misma colección de videojuegos
+        // durante toda la ejecución de la aplicación.
+        builder.Services.AddSingleton<
+            VideoJuegoRepository>();
 
-        // Pages
-        builder.Services.AddTransient<ListaPage>();
-        builder.Services.AddTransient<DetallePage>();
-        builder.Services.AddTransient<FavoritosPage>();
-        builder.Services.AddTransient<VideojuegoFormPage>();
+        // ==========================================
+        // VIEWMODELS
+        // ==========================================
+
+        // Singleton:
+        // permite conservar los favoritos entre
+        // las diferentes navegaciones.
+        builder.Services.AddSingleton<
+            FavoritosViewModel>();
+
+        // Transient:
+        // se crea una instancia nueva cuando se necesita.
+        builder.Services.AddTransient<
+            ListaViewModel>();
+
+        builder.Services.AddTransient<
+            DetalleViewModel>();
+
+        builder.Services.AddTransient<
+            VideojuegoFormViewModel>();
+
+        // ==========================================
+        // PAGES
+        // ==========================================
+
+        builder.Services.AddTransient<
+            ListaPage>();
+
+        builder.Services.AddTransient<
+            DetallePage>();
+
+        builder.Services.AddTransient<
+            FavoritosPage>();
+
+        builder.Services.AddTransient<
+            VideojuegoFormPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

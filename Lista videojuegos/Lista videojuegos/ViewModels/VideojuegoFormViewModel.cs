@@ -1,9 +1,12 @@
-using System;
-using System.Threading.Tasks;
+using Android.Telephony;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lista_videojuegos.Data;
 using Lista_videojuegos.Models;
+using System;
+using System.Threading.Tasks;
+using static Android.Icu.Text.CaseMap;
+using static Android.Util.EventLogTags;
 
 namespace Lista_videojuegos.ViewModels
 {
@@ -12,98 +15,52 @@ namespace Lista_videojuegos.ViewModels
     {
         private readonly VideoJuegoRepository _videoJuegoRepository;
 
-        private string _id = string.Empty;
-        private bool _esEdicion;
-        private string _titulo = "Agregar juego";
-        private string _nombre = string.Empty;
-        private string _descripcion = string.Empty;
-        private string _precio = string.Empty;
-        private string _categoria = string.Empty;
-        private string _imagenUrl = string.Empty;
-        private string _errorMessage = string.Empty;
-        private bool _hasError;
+        [ObservableProperty]
+        private string id = string.Empty;
 
-        public string Id
-        {
-            get => _id;
-            set
-            {
-                if (SetProperty(ref _id, value))
-                {
-                    CargarDatos(value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private bool esEdicion;
 
-        public bool EsEdicion
-        {
-            get => _esEdicion;
-            set => SetProperty(ref _esEdicion, value);
-        }
+        [ObservableProperty]
+        private string titulo = "Agregar juego";
 
-        public string Titulo
-        {
-            get => _titulo;
-            set => SetProperty(ref _titulo, value);
-        }
+        [ObservableProperty]
+        private string nombre = string.Empty;
 
-        public string Nombre
-        {
-            get => _nombre;
-            set => SetProperty(ref _nombre, value);
-        }
+        [ObservableProperty]
+        private string descripcion = string.Empty;
 
-        public string Descripcion
-        {
-            get => _descripcion;
-            set => SetProperty(ref _descripcion, value);
-        }
+        [ObservableProperty]
+        private string precio = string.Empty;
 
-        public string Precio
-        {
-            get => _precio;
-            set => SetProperty(ref _precio, value);
-        }
+        [ObservableProperty]
+        private string categoria = string.Empty;
 
-        public string Categoria
-        {
-            get => _categoria;
-            set => SetProperty(ref _categoria, value);
-        }
+        [ObservableProperty]
+        private string imagenUrl = string.Empty;
 
-        public string ImagenUrl
-        {
-            get => _imagenUrl;
-            set => SetProperty(ref _imagenUrl, value);
-        }
+        [ObservableProperty]
+        private string errorMessage = string.Empty;
 
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set
-            {
-                if (SetProperty(ref _errorMessage, value))
-                {
-                    HasError = !string.IsNullOrEmpty(value);
-                }
-            }
-        }
-
-        public bool HasError
-        {
-            get => _hasError;
-            set => SetProperty(ref _hasError, value);
-        }
-
-        public IAsyncRelayCommand GuardarCommand { get; }
+        [ObservableProperty]
+        private bool hasError;
 
         public VideojuegoFormViewModel(
             VideoJuegoRepository videoJuegoRepository)
         {
-            _videoJuegoRepository = videoJuegoRepository;
+            _videoJuegoRepository =
+                videoJuegoRepository;
+        }
 
-            GuardarCommand =
-                new AsyncRelayCommand(GuardarAsync);
+        partial void OnIdChanged(string value)
+        {
+            CargarDatos(value);
+        }
+
+        partial void OnErrorMessageChanged(string value)
+        {
+            HasError =
+                !string.IsNullOrEmpty(value);
         }
 
         private void CargarDatos(string value)
@@ -142,7 +99,9 @@ namespace Lista_videojuegos.ViewModels
             ImagenUrl = videojuego.ImagenUrl;
         }
 
-        private async Task GuardarAsync()
+        // CREATE / UPDATE
+        [RelayCommand]
+        private async Task Guardar()
         {
             if (string.IsNullOrWhiteSpace(Nombre))
             {

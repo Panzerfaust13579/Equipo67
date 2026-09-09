@@ -8,27 +8,10 @@ namespace Lista_videojuegos.ViewModels
 {
     public partial class FavoritosViewModel : ObservableObject
     {
-        private ObservableCollection<Videojuego> _productos = new();
+        [ObservableProperty]
+        private ObservableCollection<Videojuego> productos = new();
 
-        public ObservableCollection<Videojuego> Productos
-        {
-            get => _productos;
-            set => SetProperty(ref _productos, value);
-        }
-
-        public IRelayCommand<Videojuego> AgregarFavoritoCommand { get; }
-
-        public IRelayCommand<Videojuego> EliminarFavoritoCommand { get; }
-
-        public FavoritosViewModel()
-        {
-            AgregarFavoritoCommand =
-                new RelayCommand<Videojuego>(AgregarFavorito);
-
-            EliminarFavoritoCommand =
-                new RelayCommand<Videojuego>(EliminarFavorito);
-        }
-
+        [RelayCommand]
         public void AgregarFavorito(Videojuego videojuego)
         {
             if (videojuego == null)
@@ -40,14 +23,14 @@ namespace Lista_videojuegos.ViewModels
             }
         }
 
+        [RelayCommand]
         public void EliminarFavorito(Videojuego videojuego)
         {
             if (videojuego == null)
                 return;
 
-            var favorito =
-                Productos.FirstOrDefault(
-                    p => p.Id == videojuego.Id);
+            var favorito = Productos.FirstOrDefault(
+                p => p.Id == videojuego.Id);
 
             if (favorito != null)
             {
