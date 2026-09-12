@@ -26,29 +26,47 @@ namespace Lista_videojuegos.Data
         // Carga inicial desde el API
         public async Task CargarVideojuegosAsync()
         {
-            var response = await _httpClient.GetAsync(
-                "api/VideoGame/GetVideoJuegos");
+            // 1. LA SOLUCIÓN MÁGICA: Si la lista ya tiene datos, no consultes la API de nuevo.
+            // Esto protege los cambios que ya hiciste en memoria.
+            if (_videojuegos.Any())
+                return;
 
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                var response = await _httpClient.GetAsync("api/VideoGame/GetVideoJuegos");
+                response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
+                var json = await response.Content.ReadAsStringAsync();
 
-            var videojuegos =
-                JsonSerializer.Deserialize<List<Videojuego>>(
+                var videojuegos = JsonSerializer.Deserialize<List<Videojuego>>(
                     json,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
 
-            if (videojuegos == null)
-                return;
+                if (videojuegos == null)
+                    return;
 
-            _videojuegos.Clear();
+                _videojuegos.Clear();
 
-            foreach (var videojuego in videojuegos)
+                foreach (var videojuego in videojuegos)
+                {
+                    _videojuegos.Add(videojuego);
+                }
+            }
+            // 2. TUS REQUERIMIENTOS PIDEN MANEJAR ESTOS 3 ERRORES:
+            catch (HttpRequestException ex)
             {
-                _videojuegos.Add(videojuego);
+                Console.WriteLine($"Error HTTP: {ex.Message}");
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"Cancelado: {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Error de JSON: {ex.Message}");
             }
         }
 
